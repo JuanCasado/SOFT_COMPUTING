@@ -3,6 +3,8 @@ function population = PopulationFactory (fenotype_name, fenotypeFactory, fenotyp
         population = @() rowPopulation(fenotypeFactory, fenotype_len, population_len);
     elseif fenotype_name == "col"
         population = @() colPopulation(fenotypeFactory, fenotype_len, population_len);
+    elseif fenotype_name == "list"
+        population = @() listPopulation(fenotypeFactory, population_len);
     else
         error("Invalid population name")
     end
