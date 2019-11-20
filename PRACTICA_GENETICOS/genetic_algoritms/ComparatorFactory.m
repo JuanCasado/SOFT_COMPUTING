@@ -1,7 +1,7 @@
-function comparator = ComparatorFactory (comparator_name)
-    if comparator_name == "min"
+function comparator = ComparatorFactory (config)
+    if config.comparator == "min"
         comparator = minComparator;
-    elseif comparator_name == "max"
+    elseif config.comparator == "max"
         comparator = maxComparator;
     else
         error("Invalid comparator name")

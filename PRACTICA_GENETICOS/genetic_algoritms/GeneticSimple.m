@@ -1,8 +1,8 @@
-function [best_fenotype, best_fitness] = GeneticSimple (domain, evaluator, comparator, stopper, newGenotype, newFenotype, sigma)
+function [best_fenotype, best_fitness] = GeneticSimple (evaluator, comparator, stopper, newFenotype, sigma)
     best_fenotype = newFenotype();
     best_fitness = [evaluator(best_fenotype)];
     while ~stopper()
-        fenotype = best_fenotype + sigma*randn(1, length(best_fenotype));
+        fenotype = totalMutation(sigma, best_fenotype);
         fitness = evaluator(fenotype);
         if comparator(fitness, best_fitness)
             best_fitness = [best_fitness fitness];

@@ -5,4 +5,10 @@ function stop = iterationStop (max_iterations)
     end
     stop = (iterations == 0);
     iterations = iterations - 1;
+    if mod(iterations, 100) == 0
+        display(iterations)
+    end
+    if stop
+        clear iterations;
+    end
 end
