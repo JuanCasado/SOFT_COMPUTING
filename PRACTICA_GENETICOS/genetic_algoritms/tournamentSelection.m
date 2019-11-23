@@ -5,11 +5,13 @@ function new_population = tournamentSelection (evaluator, comparator, population
         index2 = randi(size(population,1), 1);
         if comparator(evaluator(population(index1,:)),evaluator(population(index2,:)))
             score(index1) = score(index1)+1;
+        else
+            score(index2) = score(index2)+1;
         end
     end
     [~,indexes] = sort(score);
     new_population = zeros(population_len, size(population,2));
-    for i = 1:population_len
-        new_population(i,:) = population(indexes(i),:);
+    for i = 0:(population_len-1)
+        new_population(end-i,:) = population(indexes(end-i),:);
     end
 end

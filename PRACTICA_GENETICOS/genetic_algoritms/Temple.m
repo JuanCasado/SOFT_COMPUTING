@@ -19,4 +19,5 @@ function [best_fenotype, fitness] = Temple (evaluator,comparator, stopper, newFe
             end
         end
         sigma = sigma*0.95; 
+    end
 end
