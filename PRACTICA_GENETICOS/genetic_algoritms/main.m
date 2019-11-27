@@ -230,7 +230,7 @@ config_genetic3.crossover = "";
 config_genetic3.selection = "";
 
 config_harmonic1.population_len = 25;
-config_harmonic1.sigma = 0.5;
+config_harmonic1.sigma = 0.2;
 config_harmonic1.fenotype_len = 30;
 config_harmonic1.max_iterations = 50000;
 config_harmonic1.domain = "d1";
