@@ -229,7 +229,7 @@ config_genetic3.mutation = "";
 config_genetic3.crossover = "";
 config_genetic3.selection = "";
 
-config_harmonic1.population_len = 100;
+config_harmonic1.population_len = 25;
 config_harmonic1.sigma = 0.5;
 config_harmonic1.fenotype_len = 30;
 config_harmonic1.max_iterations = 50000;
@@ -237,10 +237,10 @@ config_harmonic1.domain = "d1";
 config_harmonic1.comparator = "min";
 config_harmonic1.evaluator = "f1";
 config_harmonic1.stopper = "iterations";
+config_harmonic1.mutation = "multiple";
 config_harmonic1.algorithm = "harmonic";
 config_harmonic1.lambda = 0;
 config_harmonic1.percentage = 0;
-config_harmonic1.mutation = "";
 config_harmonic1.crossover = "";
 config_harmonic1.selection = "";
 
@@ -252,10 +252,10 @@ config_harmonic2.domain = "d2";
 config_harmonic2.comparator = "min";
 config_harmonic2.evaluator = "f2";
 config_harmonic2.stopper = "iterations";
+config_harmonic2.mutation = "multiple";
 config_harmonic2.algorithm = "harmonic";
 config_harmonic2.lambda = 0;
 config_harmonic2.percentage = 0;
-config_harmonic2.mutation = "";
 config_harmonic2.crossover = "";
 config_harmonic2.selection = "";
 
@@ -267,10 +267,10 @@ config_harmonic3.domain = "d3";
 config_harmonic3.comparator = "min";
 config_harmonic3.evaluator = "f3";
 config_harmonic3.stopper = "iterations";
+config_harmonic3.mutation = "multiple";
 config_harmonic3.algorithm = "harmonic";
 config_harmonic3.lambda = 0;
 config_harmonic3.percentage = 0;
-config_harmonic3.mutation = "";
 config_harmonic3.crossover = "";
 config_harmonic3.selection = "";
 
@@ -344,7 +344,7 @@ configurations = [config_genetic_full_ranking1;
                   config_temple3];
 executor(configurations)
 %%
-optimization = OptimizationFactory(config_harmonic1);
+optimization = OptimizationFactory(config_harmonic2);
 [best, fit] = optimization();
 disp(strcat("Fitness: ", num2str(fit(end))))
 disp("---------------------------")

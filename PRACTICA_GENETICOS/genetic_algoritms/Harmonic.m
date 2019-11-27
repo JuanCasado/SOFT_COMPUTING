@@ -1,4 +1,4 @@
-function [best_fenotype, best_fitness] = Harmonic (evaluator, comparator, stopper, newGenotype, newPopulation, sigma)
+function [best_fenotype, best_fitness] = Harmonic (evaluator, comparator, stopper, newGenotype, newPopulation, mutator)
     population = newPopulation();
     population = sortPopulation(evaluator, population);
     worst_fitness = evaluator(population(end,:));
@@ -7,22 +7,22 @@ function [best_fenotype, best_fitness] = Harmonic (evaluator, comparator, stoppe
     while ~stopper()
         new_fenotype = zeros(1, size(population,2));
         for i = 1:size(population, 2)
-            if randi(100, 1) > 12
-                col_index = randi(size(population, 1),1);
-                new_fenotype(i) = population(col_index, i);
+            if randi(100, 1) > 20
+                row_index = randi(size(population, 1),1);
+                new_fenotype(i) = population(row_index, i);
             else
                 new_fenotype(i) = newGenotype();
             end
-            if randi(3,1) == 1
-                new_fenotype(i) = elementMutation(sigma, new_fenotype(i));
-            end
-        end        
+        end
+        if randi(100,1) < 30
+            new_fenotype = mutator(new_fenotype);
+        end
         new_fitness = evaluator(new_fenotype);
         if comparator(new_fitness, worst_fitness)
             population = sortPopulation(evaluator, population);
             population(end,:) = new_fenotype;
             worst_fitness = evaluator(population(end-1,:));
-            population(randperm(size(population,1)),:);
+            population = population(randperm(size(population,1)),:);
         end
         [best_fenotype, best_fitness_pop] = getBest(population);
         best_fitness = [best_fitness best_fitness_pop];
