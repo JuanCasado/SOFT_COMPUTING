@@ -1,4 +1,4 @@
-function [best_fenotype, best_fitness] = Harmonic (evaluator, comparator, stopper, newGenotype, newPopulation, mutator)
+function [best_fenotype, best_fitness] = Harmonic (evaluator, comparator, stopper, newGenotype, newPopulation, mutatorFenotype, mutatorelement)
     population = newPopulation();
     population = sortPopulation(evaluator, population);
     worst_fitness = evaluator(population(end,:));
@@ -13,9 +13,12 @@ function [best_fenotype, best_fitness] = Harmonic (evaluator, comparator, stoppe
             else
                 new_fenotype(i) = newGenotype();
             end
+            if randi(100,1) < 30
+                new_fenotype(i) = mutatorelement(new_fenotype(i));
+            end
         end
         if randi(100,1) < 30
-            new_fenotype = mutator(new_fenotype);
+            new_fenotype = mutatorFenotype(new_fenotype);
         end
         new_fitness = evaluator(new_fenotype);
         if comparator(new_fitness, worst_fitness)
