@@ -1,6 +1,6 @@
-function optimization = OptimizationFactory (config)
+function optimization = OptimizationFactory (config, data, targets)
     domain = Domain (config);
-    evaluator = EvaluatorFactory(config);
+    evaluator = EvaluatorFactory(config, data, targets);
     comparator = ComparatorFactory(config);
     stopper = StopFactory(config);
     newGenotype = GenotypeFactory(domain);

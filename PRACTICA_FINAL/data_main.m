@@ -16,11 +16,13 @@ normatization_data = max(data,[],2);
 normatization_targets = max(targets);
 
 train = zeros(number_of_variables, floor(size(data,2)/2));
+targets_train = zeros(1, floor(size(data,2)/2));
 test = zeros(number_of_variables, floor(size(data,2)/2));
+targets_test = zeros(1, floor(size(data,2)/2));
 offset = 0;
 for i = 1:size(data, 1)
     if variables_to_use(i)
-        for j = 1:size(data, 2)
+        for j = 1:(size(data, 2)-1)
             if mod(j ,2)
                 train(i-offset,(j+1)/2) = data(i,j)/normatization_data(i);
             else
@@ -32,7 +34,29 @@ for i = 1:size(data, 1)
     end
 end
 
-targets = targets/normatization_targets;
+
+for j = 2:size(targets, 2)
+    if mod(j ,2)
+        targets_test((j-1)/2) = targets(j)/normatization_targets;
+    else
+        targets_train(j/2) = targets(j)/normatization_targets;
+    end
+end
+
+config.population_len = 1;
+config.sigma = 0.01;
+config.fenotype_len = number_of_variables*2+1;
+config.max_iterations = 300;
+config.percentage = 0.3;
+config.domain = "d4";
+config.comparator = "min";
+config.evaluator = "final";
+config.stopper = "iterations";
+config.mutation = "multiple";
+config.crossover = "double";
+config.selection = "ranking";
+config.algorithm = "genetic-full";
+config.lambda = 0;
 
 
 

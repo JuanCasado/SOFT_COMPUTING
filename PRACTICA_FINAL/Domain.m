@@ -5,6 +5,8 @@ function domain = Domain (config)
         domain = [-500 500];
     elseif config.domain == "d3"
         domain = [-30 30];
+    elseif config.domain == "d4"
+        domain = [0 1];
     else
         error("Invalid domain name")
     end
