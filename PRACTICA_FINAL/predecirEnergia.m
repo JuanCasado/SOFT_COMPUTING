@@ -4,7 +4,7 @@ function y = predecirEnergia(data,pesos)
     bias = pesos(end)*5;
     
     for i = 1:length(data)
-       acc = acc + ((pesos(i)*data(i))^pesos(i+mprima));
+       acc = acc + pesos(i)*(data(i)^pesos(i+mprima));
     end
     y = acc+bias;
 end
