@@ -15,15 +15,21 @@ function optimization = OptimizationFactory (config, data, targets)
         lambda = config.lambda;
         optimization = @() Genetic(evaluator, stopper, comparator, newPopulation, sigma, lambda);
     elseif config.algorithm  == "genetic-full"
-        mutator = MutationFactory(config);
+        mutator = MutationFactory(config, domain);
         crosser = CrossoverFactory(config);
         selector = SelectionFactory(config, evaluator, comparator);
         optimization = @() FullGenetic(evaluator, comparator, stopper, mutator, crosser, selector, newPopulation);
+    elseif config.algorithm  == "genetic-temple"
+        lambda = config.lambda;
+        mutator = @(fenotype, sigma) multipleMutation(sigma, domain,config.percentage,fenotype);
+        crosser = CrossoverFactory(config);
+        selector = SelectionFactory(config, evaluator, comparator);
+        optimization = @() GeneticTemple(evaluator, comparator, stopper, mutator, crosser, selector, newPopulation, sigma, lambda);
     elseif config.algorithm  == "temple"
         lambda = config.lambda;
-        optimization = @() Temple(evaluator, comparator, stopper, newFenotype, sigma, lambda);
+        optimization = @() Temple(evaluator, comparator, stopper, newFenotype, sigma, lambda, domain);
     elseif config.algorithm  == "harmonic"
-        mutatorFenotype = MutationFactory(config);
+        mutatorFenotype = MutationFactory(config, domain);
         mutatorElement = @(genotype) elementMutation(sigma, domain,genotype);
         optimization = @() Harmonic(evaluator, comparator, stopper, newGenotype, newPopulation, mutatorFenotype, mutatorElement);
     else

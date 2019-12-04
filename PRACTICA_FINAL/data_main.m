@@ -1,3 +1,6 @@
+clear all
+close all
+
 data = ...
     [
         [58512000 58559000 58851000 59206000 59327000 59541000 59753000 59964000 60186000 60496000 60912000  61357000 61805000 62244000 62704000 63179000 63621000 64016000 64374000 64707000 65027000 65342000 65659000 65998000 66331000 66624000 66892000];
@@ -43,20 +46,79 @@ for j = 2:size(targets, 2)
     end
 end
 
-config.population_len = 1;
-config.sigma = 0.01;
+config_harmonic1.population_len = 50;
+config_harmonic1.sigma = 0.5;
+config_harmonic1.fenotype_len = number_of_variables*2+1;
+config_harmonic1.max_iterations = 20000;
+config_harmonic1.domain = "d4";
+config_harmonic1.comparator = "min";
+config_harmonic1.evaluator = "final";
+config_harmonic1.stopper = "iterations";
+config_harmonic1.mutation = "multiple";
+config_harmonic1.algorithm = "harmonic";
+config_harmonic1.lambda = 0;
+config_harmonic1.percentage = 0;
+config_harmonic1.crossover = "";
+config_harmonic1.selection = "";
+
+config2.population_len = 50;
+config2.sigma = 10;
+config2.fenotype_len =  number_of_variables*2+1;
+config2.lambda = 100;
+config2.max_iterations = 5000;
+config2.percentage = 0.3;
+config2.domain = "d4";
+config2.comparator = "min";
+config2.evaluator = "final";
+config2.stopper = "iterations";
+config2.mutation = "multiple";
+config2.crossover = "double";
+config2.selection = "ranking";
+config2.algorithm = "genetic-temple";
+
+config.sigma = 25;
+config.lambda = 1000;
 config.fenotype_len = number_of_variables*2+1;
-config.max_iterations = 300;
-config.percentage = 0.3;
+config.max_iterations = 8000;
 config.domain = "d4";
 config.comparator = "min";
 config.evaluator = "final";
 config.stopper = "iterations";
-config.mutation = "multiple";
-config.crossover = "double";
-config.selection = "ranking";
-config.algorithm = "genetic-full";
-config.lambda = 0;
+config.algorithm = "temple";
+config.population_len = 0;
+config.percentage = 0;
+config.mutation = "";
+config.crossover = "";
+config.selection = "";
 
+optimizador = OptimizationFactory(config2, train, targets_train);
+[best, fit] = optimizador();
 
+figure;plot(fit)
+%%
+evaluatorTest = EvaluatorFactory(config2, test, targets_test);
+test_error = evaluatorTest(best)*normatization_targets^2;
+disp(test_error);
+raw_predict_data = data(:,end);
+predict_data = zeros(1,sum(variables_to_use));
+for i = 1:size(predict_data,1)
+    if variables_to_use(i)
+        predict_data(i) = raw_predict_data(i)/normatization_data(i);
+    end
+end
+
+%energia_predecida = predecirEnergia(predict_data, best)*normatization_targets;
+%disp(energia_predecida);
+
+%%
+predictions_test = zeros(1,size(targets_test, 2));
+for i = 1:size(targets_test, 2)
+    predictions_test(i) = predecirEnergia(test(:,i), best);
+end
+
+figure;
+plot(targets_test*normatization_targets, '-or')
+hold on;
+plot(predictions_test*normatization_targets, '-xb')
+hold off
 

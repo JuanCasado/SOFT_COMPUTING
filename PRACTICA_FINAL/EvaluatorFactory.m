@@ -5,7 +5,7 @@ function evaluator = EvaluatorFactory (config, data, targets)
         evaluator = @(x) f2(x, config.fenotype_len);
     elseif config.evaluator == "f3"
         evaluator = @(x) f3(x, config.fenotype_len);
-    elseif config.evaluator == "f4"
+    elseif config.evaluator == "final"
         evaluator = @(pesos) funFinal(data, pesos, targets);
     else
         error("Invalid function name")
