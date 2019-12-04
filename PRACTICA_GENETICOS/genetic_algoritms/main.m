@@ -344,13 +344,13 @@ configurations = [config_genetic_full_ranking1;
                   config_temple3];
 executor(configurations)
 %%
-optimization = OptimizationFactory(config_harmonic3);
+optimization = OptimizationFactory(config_genetic3);
 [best, fit] = optimization();
 disp(strcat("Fitness: ", num2str(fit(end))))
 %disp("---------------------------")
 figure; plot(fit)
 %%
-optimization = OptimizationFactory(config_harmonic1);
+optimization = OptimizationFactory(config_genetic_full_ranking3);
 [best, mean, best_fenotype] = execute(optimization, 30);
 disp(strcat("Mejor fitness: ", num2str(best)))
 disp(strcat("Media fitness: ", num2str(mean)))

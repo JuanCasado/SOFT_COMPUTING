@@ -11,7 +11,8 @@ function [best_fenotype, best_fitness] = Harmonic (evaluator, comparator, stoppe
                 row_index = randi(size(population, 1),1);
                 new_fenotype(i) = population(row_index, i);
             else
-                new_fenotype(i) = newGenotype();
+                %new_fenotype(i) = newGenotype();
+                new_fenotype(i)
             end
             if randi(100,1) < 30
                 new_fenotype(i) = mutatorelement(new_fenotype(i));
