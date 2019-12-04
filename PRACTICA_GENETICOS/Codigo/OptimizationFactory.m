@@ -24,7 +24,7 @@ function optimization = OptimizationFactory (config)
         optimization = @() Temple(evaluator, comparator, stopper, newFenotype, sigma, lambda);
     elseif config.algorithm  == "harmonic"
         mutatorFenotype = MutationFactory(config);
-        mutatorElement = @(genotype) elementMutation(sigma,genotype);
+        mutatorElement = @(genotype) elementMutation(sigma, domain,genotype);
         optimization = @() Harmonic(evaluator, comparator, stopper, newGenotype, newPopulation, mutatorFenotype, mutatorElement);
     else
         error("Invalid optimization name")

@@ -344,7 +344,7 @@ configurations = [config_genetic_full_ranking1;
                   config_temple3];
 executor(configurations)
 %%
-optimization = OptimizationFactory(config_harmonic3);
+optimization = OptimizationFactory(config_harmonic2);
 [best, fit] = optimization();
 disp(strcat("Fitness: ", num2str(fit(end))))
 %disp("---------------------------")
