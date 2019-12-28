@@ -46,20 +46,20 @@ for j = 2:size(targets, 2)
     end
 end
 
-config_harmonic1.population_len = 50;
-config_harmonic1.sigma = 0.5;
-config_harmonic1.fenotype_len = number_of_variables*2+1;
-config_harmonic1.max_iterations = 20000;
-config_harmonic1.domain = "d4";
-config_harmonic1.comparator = "min";
-config_harmonic1.evaluator = "final";
-config_harmonic1.stopper = "iterations";
-config_harmonic1.mutation = "multiple";
-config_harmonic1.algorithm = "harmonic";
-config_harmonic1.lambda = 0;
-config_harmonic1.percentage = 0;
-config_harmonic1.crossover = "";
-config_harmonic1.selection = "";
+config1.population_len = 50;
+config1.sigma = 0.5;
+config1.fenotype_len = number_of_variables*2+1;
+config1.max_iterations = 20000;
+config1.domain = "d4";
+config1.comparator = "min";
+config1.evaluator = "final";
+config1.stopper = "iterations";
+config1.mutation = "multiple";
+config1.algorithm = "harmonic";
+config1.lambda = 0;
+config1.percentage = 0;
+config1.crossover = "";
+config1.selection = "";
 
 config2.population_len = 50;
 config2.sigma = 10;
@@ -76,10 +76,25 @@ config2.crossover = "double";
 config2.selection = "ranking";
 config2.algorithm = "genetic-temple";
 
-config.sigma = 25;
-config.lambda = 1000;
+config3.population_len = 50;
+config3.sigma = 10;
+config3.fenotype_len =  number_of_variables*2+1;
+config3.lambda = 100;
+config3.max_iterations = 10000;
+config3.percentage = 0.3;
+config3.domain = "d4";
+config3.comparator = "min";
+config3.evaluator = "final";
+config3.stopper = "iterations";
+config3.mutation = "multiple";
+config3.crossover = "double";
+config3.selection = "ranking";
+config3.algorithm = "genetic-full";
+
+config.sigma = 20;
+config.lambda = 1500;
 config.fenotype_len = number_of_variables*2+1;
-config.max_iterations = 8000;
+config.max_iterations = 10000;
 config.domain = "d4";
 config.comparator = "min";
 config.evaluator = "final";
@@ -93,7 +108,7 @@ config.selection = "";
 
 
 %%
-current_config = config_harmonic1;
+current_config = config2;
 optimizador = OptimizationFactory(current_config, train, targets_train);
 [best, fit] = optimizador();
 
