@@ -56,7 +56,6 @@ net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
 net.divideParam.testRatio = 0/100;
 
-net.trainFcn = 'traingd';
 % Entrenamiento de la red
 [net,tr] = train(net,trainD,targets_train);
 outputs = net(testD);
