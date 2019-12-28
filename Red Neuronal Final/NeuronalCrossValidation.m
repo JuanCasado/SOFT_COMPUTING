@@ -78,7 +78,7 @@ for i = 1:size(dataD,2)
    targetsDraw = [targetsDraw targetsTest];
    
 
-    hiddenLayerSize = [10];
+    hiddenLayerSize = [15];
     net = fitnet(hiddenLayerSize);
     net.divideParam.trainRatio = 100/100;
     net.divideParam.valRatio = 0/100;
@@ -99,4 +99,3 @@ plot(targetsDraw*normatization_targets, '-or')
 plot(outputsDraw*normatization_targets, '-xb')
 hold off;
 disp(mean(errors));
-
