@@ -91,11 +91,14 @@ for i = 1:size(dataD,2)
     outputsDraw = [outputsDraw outputs];
     errors = [errors ((outputs-targetsTest)^2)*normatization_targets^2];
 end
- 
+
+view(net)
+disp(errors);
 figure;
 hold on;
 view(net)
 plot(targetsDraw*normatization_targets, '-or')
 plot(outputsDraw*normatization_targets, '-xb')
+legend('Valores Reales','Valores Predichos')
 hold off;
 disp(mean(errors));

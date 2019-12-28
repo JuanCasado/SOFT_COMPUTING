@@ -59,13 +59,28 @@ net.divideParam.testRatio = 0/100;
 % Entrenamiento de la red
 [net,tr] = train(net,trainD,targets_train);
 outputs = net(testD);
-errors = gsubtract(targets_test,outputs);
+
+error = 0;
+numValoresTest = length(outputs);
+for i = 1:numValoresTest
+    error = error + ((targets_test(i)*normatization_targets - outputs(i)*normatization_targets)^2);
+end
+outputs_train = net(trainD);
+
 %%
 % Visualización
 view(net)
-
-figure;
+disp(error/numValoresTest)
+figure;subplot(2,1,1);
 plot(targets_test*normatization_targets, '-or')
 hold on;
 plot(outputs*normatization_targets, '-xb')
+legend('Valores Reales','Valores Predichos')
+title("TEST");
 hold off
+subplot(2,1,2);
+plot(targets_train*normatization_targets, '-or')
+hold on;
+plot(outputs_train*normatization_targets, '-xb')
+legend('Valores Reales','Valores Predichos')
+title("TRAIN");
