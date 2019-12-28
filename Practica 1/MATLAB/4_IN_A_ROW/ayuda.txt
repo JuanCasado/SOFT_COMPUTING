@@ -1,0 +1,6 @@
+Juega a las 4 en raya.
+
+Selecciona el nivel y pulsa jugar para comenzar, durante el juego puedes 
+pulsar ESCAPE para acabar.
+
+Pulsa SALIR si quieres abandonar el juego.
