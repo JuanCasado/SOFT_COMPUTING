@@ -85,6 +85,7 @@ for i = 1:size(dataD,2)
     net.divideParam.testRatio = 0/100;
     net.trainParam.epochs = 10;
     net.trainParam.goal = 0;
+    net.trainFcn = 'traingd';
     % Entrenamiento de la red
     [net,tr] = train(net,trainCross,targetsTrain);
     outputs = net(testCross);

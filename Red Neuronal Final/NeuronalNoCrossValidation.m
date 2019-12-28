@@ -49,12 +49,14 @@ end
 %dataT = (trainD+testD);
 %targetsT = (targets_train+targets_test);
 
-hiddenLayerSize = [30];
+hiddenLayerSize = [20];
 net = fitnet(hiddenLayerSize);
 % División del conjunto de datos para entrenamiento, validación y test
 net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
-net.divideParam.testRatio = 15/100;
+net.divideParam.testRatio = 0/100;
+
+net.trainFcn = 'traingd';
 % Entrenamiento de la red
 [net,tr] = train(net,trainD,targets_train);
 outputs = net(testD);
