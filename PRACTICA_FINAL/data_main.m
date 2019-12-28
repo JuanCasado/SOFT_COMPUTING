@@ -65,7 +65,7 @@ config2.population_len = 50;
 config2.sigma = 10;
 config2.fenotype_len =  number_of_variables*2+1;
 config2.lambda = 100;
-config2.max_iterations = 5000;
+config2.max_iterations = 1000;
 config2.percentage = 0.3;
 config2.domain = "d4";
 config2.comparator = "min";
@@ -91,22 +91,27 @@ config.mutation = "";
 config.crossover = "";
 config.selection = "";
 
-optimizador = OptimizationFactory(config2, train, targets_train);
+
+%%
+current_config = config_harmonic1;
+optimizador = OptimizationFactory(current_config, train, targets_train);
 [best, fit] = optimizador();
 
 figure;plot(fit)
-%%
-evaluatorTest = EvaluatorFactory(config2, test, targets_test);
+evaluatorTest = EvaluatorFactory(current_config, test, targets_test);
 test_error = evaluatorTest(best)*normatization_targets^2;
 disp(test_error);
-raw_predict_data = data(:,end);
-predict_data = zeros(1,sum(variables_to_use));
-for i = 1:size(predict_data,1)
-    if variables_to_use(i)
-        predict_data(i) = raw_predict_data(i)/normatization_data(i);
-    end
-end
 
+
+%%
+% Predecir año futuro
+%raw_predict_data = data(:,end);
+% predict_data = zeros(1,sum(variables_to_use));
+% for i = 1:size(predict_data,1)
+%     if variables_to_use(i)
+%         predict_data(i) = raw_predict_data(i)/normatization_data(i);
+%     end
+% end
 %energia_predecida = predecirEnergia(predict_data, best)*normatization_targets;
 %disp(energia_predecida);
 
@@ -116,9 +121,21 @@ for i = 1:size(targets_test, 2)
     predictions_test(i) = predecirEnergia(test(:,i), best);
 end
 
-figure;
+predictions_train = zeros(1,size(targets_test, 2));
+for i = 1:size(targets_train, 2)
+    predictions_train(i) = predecirEnergia(train(:,i), best);
+end
+
+figure;subplot(2,1,1);
 plot(targets_test*normatization_targets, '-or')
 hold on;
 plot(predictions_test*normatization_targets, '-xb')
+title("TEST");
+hold off
+subplot(2,1,2);
+plot(targets_train*normatization_targets, '-or')
+hold on;
+plot(predictions_train*normatization_targets, '-xb')
+title("TRAIN");
 hold off
 
