@@ -46,25 +46,57 @@ for j = 2:size(targets, 2)
     end
 end
 
-%dataT = (trainD+testD);
-%targetsT = (targets_train+targets_test);
+dataD = zeros((size(data,1)-1),(size(data,2)-1));
+targetsD = zeros(1,(size(targets,2)-1));
+for i = 2:(size(dataD,2)+1)
+    if ~mod(i,2)
+        dataD(:,i-1) = trainD(:,i/2);
+        targetsD(i-1) = targets_train(i/2);
+    else 
+        dataD(:,i-1) = testD(:,(i-1)/2);
+        targetsD(i-1) = targets_test((i-1)/2);
+    end
+end
 
-hiddenLayerSize = [5 4];
-net = patternnet(hiddenLayerSize);
-% División del conjunto de datos para entrenamiento, validación y test
-net.divideParam.trainRatio = 70/100;
-net.divideParam.valRatio = 15/100;
-net.divideParam.testRatio = 15/100;
-% Entrenamiento de la red
-[net,tr] = train(net,trainD,targets_train);
-outputs = net(testD);
-errors = gsubtract(targets_test,outputs);
-%%
-% Visualización
-view(net)
 
+errors = [];
+targetsDraw = [];
+outputsDraw = [];
+for i = 1:size(dataD,2)
+   if i < size(dataD,2)
+    trainCross = [dataD(:,1:i-1) dataD(:,i+1:end)]; 
+    targetsTrain = [targetsD(:,1:i-1) targetsD(:,i+1:end)];
+   else
+    trainCross = [dataD(:,1:i-1)]; 
+    targetsTrain = [targetsD(:,1:i-1)];
+   end
+   %disp(size(trainCross))
+   %disp(size(targetsTrain))
+   
+   testCross = dataD(:,i);
+   targetsTest = targetsD(:,i);
+   targetsDraw = [targetsDraw targetsTest];
+   
+
+    hiddenLayerSize = [10];
+    net = fitnet(hiddenLayerSize);
+    net.divideParam.trainRatio = 100/100;
+    net.divideParam.valRatio = 0/100;
+    net.divideParam.testRatio = 0/100;
+    net.trainParam.epochs = 10;
+    net.trainParam.goal = 0;
+    % Entrenamiento de la red
+    [net,tr] = train(net,trainCross,targetsTrain);
+    outputs = net(testCross);
+    outputsDraw = [outputsDraw outputs];
+    errors = [errors ((outputs-targetsTest)^2)*normatization_targets^2];
+end
+ 
 figure;
-plot(targets_test*normatization_targets, '-or')
 hold on;
-plot(outputs*normatization_targets, '-xb')
-hold off
+view(net)
+plot(targetsDraw*normatization_targets, '-or')
+plot(outputsDraw*normatization_targets, '-xb')
+hold off;
+disp(mean(errors));
+
